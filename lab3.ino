@@ -1,9 +1,30 @@
 //James Jhong 1939553
 
+//use a .h for pins 
 void setup() {
-  // put your setup code here, to run once:
+  //Setting up Timer 4 for use in demo 1
+  TCCR4A = 0;
+  TCCR4B = 0;
+  TCNT4 = 0;
+  
+  OCR4A = 0;
+  TCNT4 = 0;
+  TCCR4A |= (1 << COM4A0); //Toggling on compare match
+  TCCR4B |= (1 << WGM42); //CTC MODE
+  TCCR4B |= (1 << CS40); //Prescalar 1
 
 }
+
+void ocr_calc(int freq) {
+  Serial.begin(9600);
+  if (freq == 0) {
+    OCR4A = 0;
+  } else {
+    Serial.print(OCR4A, DEC);
+    OCR4A = (16000000 / 2 * freq) - 1 ;
+  }
+}
+
 //Use a .h folder for the different schedulers?
 void loop() {
   //Demo Number 1: Round Robin scheduler
